@@ -18,12 +18,13 @@ INDEX = ROOT / "content" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 
 YOUTUBE_RSS = [
+    # 채널의 일반 영상(롱폼·미드폼)만 모은 목록: 쇼츠와 라이브는 빠짐
+    "https://www.youtube.com/feeds/videos.xml?playlist_id=UULFLtCTZHiue8-5Cg2CtdZDSg",
+    # 위 주소가 실패할 때 쓰는 채널 전체 피드 (아래 코드에서 쇼츠를 걸러냄)
     "https://www.youtube.com/feeds/videos.xml?channel_id=UCLtCTZHiue8-5Cg2CtdZDSg",
-    # 같은 채널의 '업로드 영상' 목록 (위 주소가 가끔 404를 줄 때 대신 사용)
-    "https://www.youtube.com/feeds/videos.xml?playlist_id=UULtCTZHiue8-5Cg2CtdZDSg",
 ]
 BLOG_RSS = "https://rss.blog.naver.com/hunkyle0104.xml"
-MAX_VIDEOS = 6
+MAX_VIDEOS = 15  # 유튜브 피드가 주는 최대 개수
 MAX_POSTS = 6
 
 # 'PT 후기·운동정보' 페이지에 올릴 블로그 카테고리 ('원앤온리PT 동훈쌤' 아래 하위 카테고리 이름과 똑같이 적기)
@@ -66,13 +67,17 @@ def fetch_any(urls, tries=3):
 def youtube_items():
     root = ET.fromstring(fetch_any(YOUTUBE_RSS))
     items = []
-    for e in root.findall("atom:entry", NS)[:MAX_VIDEOS]:
+    for e in root.findall("atom:entry", NS):
         vid = e.findtext("yt:videoId", default="", namespaces=NS)
         title = e.findtext("atom:title", default="", namespaces=NS)
         published = e.findtext("atom:published", default="", namespaces=NS)
         link = e.find("atom:link", NS)
         url = link.get("href") if link is not None else f"https://www.youtube.com/watch?v={vid}"
+        if "/shorts/" in url or "#shorts" in title.lower():
+            continue  # 쇼츠 제외
         items.append({"id": vid, "title": title, "url": url, "date": published[:10]})
+        if len(items) >= MAX_VIDEOS:
+            break
     return items
 
 
