@@ -39,7 +39,7 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
-ASSET_V = "20261001c"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
+ASSET_V = "20261001d"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
@@ -371,12 +371,10 @@ section.block.first { border-top: 0; padding-top: 40px; }
 .pbody time { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
 .pbody b { font-size: 16px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .pdesc { color: var(--muted); font-size: 14px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-/* 블로그 글 4개를 가로 한 줄로: 넓은 화면은 4칸, 좁은 화면은 옆으로 넘겨 보기 */
+/* 블로그 글 4개: 넓은 화면은 가로 4칸, 태블릿은 2칸, 휴대폰은 아래로 1칸씩 */
 .posts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-@media (max-width: 899px) {
-  .posts { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
-  .posts .post { flex: 0 0 min(72%, 280px); scroll-snap-align: start; }
-}
+@media (max-width: 899px) { .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 599px) { .posts { grid-template-columns: 1fr; } }
 .pbody b { font-size: 15px; }
 h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 #reviews .feed-head, #info > .wrap > .feed-head { margin-bottom: 24px; }
