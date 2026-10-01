@@ -39,6 +39,7 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
+ASSET_V = "20261001b"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
@@ -412,7 +413,7 @@ def head(cur, prev_main=False):
 <meta name="twitter:card" content="summary_large_image">
 {ICON}
 {FONTS}
-<link rel="stylesheet" href="{'' if cur == 'home' else '../'}assets/site.css">
+<link rel="stylesheet" href="{'' if cur == 'home' else '../'}assets/site.css?v={ASSET_V}">
 <script type="application/ld+json">
 {jsonld(cur)}
 </script>
@@ -427,7 +428,7 @@ def render(cur):
     img = "images/profile.webp" if (MODE == "preview" or cur == "home") else "../images/profile.webp"
     main = body(cur).replace('src="images/profile.webp"', f'src="{img}"')
     script = (f"<script>\n{JS}</script>" if MODE == "preview"
-              else f'<script src="{"" if cur == "home" else "../"}assets/site.js" defer></script>')
+              else f'<script src="{"" if cur == "home" else "../"}assets/site.js?v={ASSET_V}" defer></script>')
     inner = f"{hdr}\n\n<main>\n{main}\n</main>\n\n{footer(cur)}\n\n{script}\n"
     if MODE == "preview" and cur == "home":
         return head(cur) + "\n" + inner
