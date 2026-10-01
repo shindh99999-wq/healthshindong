@@ -356,6 +356,9 @@ section.block.first { border-top: 0; padding-top: 40px; }
 .flinks a { text-decoration: none; color: var(--ink); }
 .flinks a:hover { color: var(--pine); }
 .focus article { scroll-margin-top: 80px; }
+.yt-embed { aspect-ratio: 16 / 9; max-width: 100%; border-radius: 14px; overflow: hidden; background: var(--pine-soft); }
+.yt-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+.yt-note { margin-top: 10px; color: var(--muted); font-size: 14px; }
 h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 #reviews .feed-head, #info > .wrap > .feed-head { margin-bottom: 24px; }
 .cp { display: grid; gap: 48px; }

@@ -25,6 +25,7 @@ YOUTUBE_RSS = [
 ]
 BLOG_RSS = "https://rss.blog.naver.com/hunkyle0104.xml"
 MAX_VIDEOS = 15  # 유튜브 피드가 주는 최대 개수
+YOUTUBE_FEED_ENABLED = False
 MAX_POSTS = 6
 
 # 'PT 후기·운동정보' 페이지에 올릴 블로그 카테고리 ('원앤온리PT 동훈쌤' 아래 하위 카테고리 이름과 똑같이 적기)
@@ -146,7 +147,11 @@ def replace_block(text, name, inner):
 def main():
     text = INDEX.read_text(encoding="utf-8")
     original = text
+    # 유튜브는 콘텐츠 페이지에 '롱폼 전체 재생목록'을 직접 넣어 두어서 자동으로 최신 상태가 유지됩니다.
+    # (유튜브 RSS가 GitHub 서버에서 막혀 있어 피드 방식은 끔. 필요하면 True로 바꾸세요)
     try:
+        if not YOUTUBE_FEED_ENABLED:
+            raise RuntimeError("유튜브 피드 사용 안 함 (재생목록 임베드 사용 중)")
         yt = youtube_items()
         if yt:
             text = replace_block(text, "YOUTUBE", render_youtube(yt))
