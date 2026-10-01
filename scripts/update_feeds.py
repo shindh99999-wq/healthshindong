@@ -132,6 +132,22 @@ def _post_image_url(post):
     return html.unescape(m.group(1)) if m else ""
 
 
+def _shrink(data, width=720):
+    """사진을 가로 720px JPEG로 줄여 페이지가 빨리 뜨게 함 (Pillow가 없으면 원본 그대로)"""
+    try:
+        from io import BytesIO
+        from PIL import Image
+        im = Image.open(BytesIO(data)).convert("RGB")
+        if im.width > width:
+            im = im.resize((width, round(im.height * width / im.width)), Image.LANCZOS)
+        out = BytesIO()
+        im.save(out, "JPEG", quality=78, optimize=True, progressive=True)
+        return out.getvalue()
+    except Exception as e:
+        print("  사진 줄이기 실패, 원본 저장:", e)
+        return data
+
+
 def save_thumbnails(items):
     """대표 사진을 내려받아 images/blog/ 에 저장하고, 지금 쓰지 않는 사진은 지움"""
     THUMB_DIR.mkdir(parents=True, exist_ok=True)
@@ -154,7 +170,7 @@ def save_thumbnails(items):
                 if len(data) < 1000:
                     print(f"  사진이 너무 작음, 건너뜀: {p['title']}")
                     continue
-                path.write_bytes(data)
+                path.write_bytes(_shrink(data))
             p["thumb"] = f"../images/blog/{name}"
             keep.add(name)
         except Exception as e:

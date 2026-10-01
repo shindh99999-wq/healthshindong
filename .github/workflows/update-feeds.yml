@@ -16,6 +16,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: 사진 줄이기 도구 설치
+        run: pip install pillow
       - name: 유튜브·블로그 최신 글 반영
         run: python scripts/update_feeds.py
       - name: 바뀐 내용이 있으면 저장
