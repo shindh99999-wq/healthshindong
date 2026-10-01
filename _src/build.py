@@ -359,6 +359,17 @@ section.block.first { border-top: 0; padding-top: 40px; }
 .yt-embed { aspect-ratio: 16 / 9; max-width: 100%; border-radius: 14px; overflow: hidden; background: var(--pine-soft); }
 .yt-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
 .yt-note { margin-top: 10px; color: var(--muted); font-size: 14px; }
+.posts { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.post a { display: grid; grid-template-rows: auto 1fr; height: 100%; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); text-decoration: none; transition: border-color .15s ease; }
+.post a:hover { border-color: var(--pine); }
+.post a:hover b { color: var(--pine); }
+.pthumb { display: block; aspect-ratio: 16 / 10; max-width: 100%; background: var(--pine-soft); overflow: hidden; }
+.pthumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pthumb-empty { display: grid; place-items: center; color: var(--pine); font-weight: 700; font-size: 15px; }
+.pbody { display: grid; gap: 6px; align-content: start; padding: 16px 18px 18px; min-width: 0; }
+.pbody time { font-family: var(--mono); font-size: 12.5px; color: var(--muted); }
+.pbody b { font-size: 16px; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pdesc { color: var(--muted); font-size: 14px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 #reviews .feed-head, #info > .wrap > .feed-head { margin-bottom: 24px; }
 .cp { display: grid; gap: 48px; }

@@ -26,7 +26,9 @@ YOUTUBE_RSS = [
 BLOG_RSS = "https://rss.blog.naver.com/hunkyle0104.xml"
 MAX_VIDEOS = 15  # 유튜브 피드가 주는 최대 개수
 YOUTUBE_FEED_ENABLED = False
-MAX_POSTS = 6
+MAX_POSTS = 4
+BLOG_ID = "hunkyle0104"
+THUMB_DIR = ROOT / "images" / "blog"  # 블로그 글 대표 사진을 저장하는 폴더
 
 # 'PT 후기·운동정보' 페이지에 올릴 블로그 카테고리 ('원앤온리PT 동훈쌤' 아래 하위 카테고리 이름과 똑같이 적기)
 # 비워두면 ([]) 모든 글을 올립니다.
@@ -101,12 +103,65 @@ def blog_items():
             date = parsedate_to_datetime(it.findtext("pubDate")).strftime("%Y-%m-%d")
         except Exception:
             date = ""
-        items.append({"title": title, "url": url, "date": date, "category": category})
+        raw = it.findtext("description") or ""
+        desc = re.sub(r"<[^>]+>", " ", raw)
+        desc = re.sub(r"\s+", " ", html.unescape(desc)).strip()
+        if len(desc) > 80:
+            desc = desc[:80].rstrip() + "…"
+        m = re.search(r"/(\d{6,})$", url)
+        log_no = m.group(1) if m else ""
+        img = re.search(r'<img[^>]+src=["\']([^"\']+)', html.unescape(raw))
+        items.append({"title": title, "url": url, "date": date, "category": category,
+                      "desc": desc, "log_no": log_no, "rss_img": img.group(1) if img else ""})
         if len(items) >= MAX_POSTS:
             break
     # 카테고리 이름이 맞는지 확인할 수 있도록 실행 기록에 남김
     print("블로그 RSS에서 본 카테고리:", ", ".join(sorted(c for c in seen if c)))
     return items
+
+
+def _post_image_url(post):
+    """글의 대표 사진 주소: RSS 안의 사진 → 없으면 글 페이지의 og:image"""
+    if post.get("rss_img"):
+        return post["rss_img"]
+    if not post.get("log_no"):
+        return ""
+    page = fetch(f"https://m.blog.naver.com/{BLOG_ID}/{post['log_no']}").decode("utf-8", "ignore")
+    m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', page) or \
+        re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', page)
+    return html.unescape(m.group(1)) if m else ""
+
+
+def save_thumbnails(items):
+    """대표 사진을 내려받아 images/blog/ 에 저장하고, 지금 쓰지 않는 사진은 지움"""
+    THUMB_DIR.mkdir(parents=True, exist_ok=True)
+    keep = set()
+    for p in items:
+        p["thumb"] = ""
+        name = f"{p['log_no'] or abs(hash(p['url']))}.jpg"
+        path = THUMB_DIR / name
+        try:
+            if not path.exists():
+                url = _post_image_url(p)
+                if not url:
+                    print(f"  사진 없음: {p['title']}")
+                    continue
+                req = urllib.request.Request(url, headers={
+                    "User-Agent": "Mozilla/5.0 (homepage feed updater)",
+                    "Referer": "https://blog.naver.com/"})
+                with urllib.request.urlopen(req, timeout=20) as r:
+                    data = r.read()
+                if len(data) < 1000:
+                    print(f"  사진이 너무 작음, 건너뜀: {p['title']}")
+                    continue
+                path.write_bytes(data)
+            p["thumb"] = f"../images/blog/{name}"
+            keep.add(name)
+        except Exception as e:
+            print(f"  사진 저장 실패 ({p['title']}): {e}")
+    for f in THUMB_DIR.glob("*.jpg"):
+        if f.name not in keep:
+            f.unlink()
 
 
 def esc(s):
@@ -129,12 +184,18 @@ def render_youtube(items):
 def render_blog(items):
     lis = []
     for p in items:
+        if p.get("thumb"):
+            pic = f'<span class="pthumb"><img src="{esc(p["thumb"])}" alt="" loading="lazy"></span>'
+        else:
+            pic = f'<span class="pthumb pthumb-empty"><span>{esc(p["category"])}</span></span>'
+        desc = f'<span class="pdesc">{esc(p["desc"])}</span>' if p.get("desc") else ""
         lis.append(
             f'            <li class="post"><a href="{esc(p["url"])}" target="_blank" rel="noopener" '
             f'data-track="platform" data-platform="naver_blog" data-location="content_post">'
-            f'<time datetime="{esc(p["date"])}">{esc(p["date"])} · {esc(p["category"])}</time><b>{esc(p["title"])}</b></a></li>'
+            f'{pic}<span class="pbody"><time datetime="{esc(p["date"])}">{esc(p["date"])} · {esc(p["category"])}</time>'
+            f'<b>{esc(p["title"])}</b>{desc}</span></a></li>'
         )
-    return '          <ul class="cards">\n' + "\n".join(lis) + "\n          </ul>"
+    return '          <ul class="posts">\n' + "\n".join(lis) + "\n          </ul>"
 
 
 def replace_block(text, name, inner):
@@ -160,6 +221,7 @@ def main():
         print("유튜브 피드를 읽지 못했습니다. 기존 목록을 유지합니다:", e)
     try:
         bl = blog_items()
+        save_thumbnails(bl)
         if bl:
             text = replace_block(text, "BLOG", render_blog(bl))
         print(f"블로그 {len(bl)}개")
