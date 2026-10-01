@@ -6,6 +6,8 @@ import json, re, sys, shutil
 from pathlib import Path
 
 HERE = Path(__file__).parent
+sys.path.insert(0, str(HERE))
+from topics import TOPICS  # 허리재활·무릎재활 페이지 내용
 ONE = (HERE / "onepage.html").read_text(encoding="utf-8")
 MODE = sys.argv[1] if len(sys.argv) > 1 else "site"
 SITE = HERE.parent  # 저장소 루트 (_src 의 상위 폴더)
@@ -39,11 +41,11 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
-ASSET_V = "20261001d"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
+ASSET_V = "20261001e"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
-    ("home", "", "index.html", "홈", "부산교대 재활PT · 동훈쌤 신동훈",
+    ("home", "", "index.html", "홈", "부산교대 재활PT · 원앤온리PT 부산교대점 동훈쌤",
      "부산 연제구 재활PT, 원앤온리PT 부산교대점 동훈쌤(신동훈). 만성 통증, 수술 후 재활, 무릎·허리 통증, 고혈압·당뇨·고지혈증 운동, 시니어 운동까지 1:1로 평가하고 운동으로 돕습니다. 네이버 예약, 전화 0507-1471-0290."),
     ("about", "about/", "about.html", "소개", "소개 · 재활PT 동훈쌤 신동훈",
      "부산교대 재활PT 트레이너 신동훈(동훈쌤) 소개. 아픈 부위만이 아니라 움직임 전체와 생활까지 함께 보는 생물심리사회적 관점으로 재활 운동을 지도합니다."),
@@ -56,7 +58,13 @@ PAGES = [
     ("consult", "consult/", "consult.html", "상담 문의", "상담 문의 · 부산교대 재활PT 동훈쌤",
      "부산교대 재활PT 상담 문의. 네이버 예약, 전화 0507-1471-0290, 인스타그램 DM으로 문의하세요. 통증·수술 후 재활·대사성 질환 운동에 관해 자주 묻는 질문도 확인할 수 있습니다."),
 ]
+for _k, _t in TOPICS.items():
+    PAGES.append((_k, _t["path"], _t["file"], _t["label"], _t["title"], _t["desc"]))
 P = {p[0]: p for p in PAGES}
+
+def focus_href(cur, k):
+    """허리·무릎은 전용 페이지로, 나머지는 운동 프로그램 페이지의 해당 위치로"""
+    return href(cur, k) if k in TOPICS else href(cur, "program", "#" + k)
 
 def href(cur, target, anchor=""):
     if MODE == "preview":
@@ -78,19 +86,21 @@ FOCUS = [
     ("senior", "시니어 운동", "나이가 들면서 줄어드는 근력과 균형을 지키는 운동. 낙상을 예방하고 계단 오르기, 의자에서 일어나기 같은 동작을 연습해서, 관절이 아픈 분들도 산책, 장보기, 외출 같은 일상생활을 다시 편하게 할 수 있도록 1:1로 돕습니다."),
 ]
 
-def focus_detail():
+def focus_detail(cur="program"):
+    def more(k):
+        return f'\n          <p><a class="more" href="{href(cur, k)}">{TOPICS[k]["h1"]} 자세히 보기 →</a></p>' if k in TOPICS else ""
     items = "\n".join(
-        f'        <article id="{k}">\n          <h3>{t}</h3>\n          <p>{d}</p>\n        </article>' for k, t, d in FOCUS)
+        f'        <article id="{k}">\n          <h3>{t}</h3>\n          <p>{d}</p>{more(k)}\n        </article>' for k, t, d in FOCUS)
     return f'      <div class="focus" id="focus">\n{items}\n      </div>'
 
 def focus_summary(cur):
     items = "\n".join(
-        f'        <a class="fcard" href="{href(cur, "program", "#" + k)}"><b>{t}</b><span>{d.split(". ")[0].rstrip(".")}.</span></a>'
+        f'        <a class="fcard" href="{focus_href(cur, k)}"><b>{t}</b><span>{d.split(". ")[0].rstrip(".")}.</span></a>'
         for k, t, d in FOCUS)
     return f'      <div class="fgrid">\n{items}\n      </div>'
 
 def tags(cur):
-    return "\n".join(f'          <li><a href="{href(cur, "program", "#" + k)}">{t}</a></li>' for k, t, _ in FOCUS)
+    return "\n".join(f'          <li><a href="{focus_href(cur, k)}">{t}</a></li>' for k, t, _ in FOCUS)
 
 # ---------------- 공통 조각 ----------------
 def header(cur):
@@ -108,7 +118,7 @@ def header(cur):
 </header>'''
 
 def footer(cur):
-    links = " · ".join(f'<a href="{href(cur, k)}">{P[k][3]}</a>' for k in ["home", "about", "program", "center", "content", "consult"])
+    links = " · ".join(f'<a href="{href(cur, k)}">{P[k][3]}</a>' for k in ["home", "about", "program", "back", "knee", "center", "content", "consult"])
     return f'''<footer>
   <div class="wrap">
     <p class="flinks">{links}</p>
@@ -212,7 +222,81 @@ def _cred_price():
 
 CRED_PRICE = _cred_price()
 
+def topic_body(cur):
+    t = TOPICS[cur]
+    who = "\n".join(f'          <div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in t["who"])
+    steps = "\n".join(f'        <li><b>{a}</b><span>{b}</span></li>' for a, b in t["steps"])
+    vids = "\n".join(
+        f'            <li class="card"><a href="https://www.youtube.com/watch?v={vid}" target="_blank" rel="noopener" '
+        f'data-track="platform" data-platform="youtube" data-location="{cur}_video">'
+        f'<span class="thumb"><img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></span>'
+        f'<b>{title}</b></a></li>' for vid, title in t["videos"])
+    faq = "\n".join(f'        <div><dt>{q}</dt><dd>{a}</dd></div>' for q, a in t["faq"])
+    return page_head(t["eyebrow"], t["h1"], t["lead"]) + f'''
+
+  <section class="block first">
+    <div class="wrap">
+      <div class="head"><h2>{t["who_title"]}</h2></div>
+      <dl class="who">
+{who}
+      </dl>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">진행 방식</p>
+        <h2>{t["label"]}은 이렇게 진행합니다</h2>
+        <p class="lead">MAT, Motor Control, DNS, STC 같은 방법은 <a class="more" href="{href(cur, "program")}">운동 프로그램</a>에서 자세히 볼 수 있어요.</p>
+      </div>
+      <ol class="steps">
+{steps}
+      </ol>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="feed-head">
+        <h2 class="sub">관련 영상</h2>
+        <a class="more" href="{YT}/videos" target="_blank" rel="noopener" data-track="platform" data-platform="youtube" data-location="{cur}_more">유튜브 채널 보기 ↗</a>
+      </div>
+          <ul class="cards">
+{vids}
+          </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="feed-head">
+        <h2 class="sub">관련 블로그 글</h2>
+        <a class="more" href="https://blog.naver.com/hunkyle0104" target="_blank" rel="noopener" data-track="platform" data-platform="naver_blog" data-location="{cur}_more">블로그 보기 ↗</a>
+      </div>
+<!-- FEED:{t["feed"]}:START -->
+          <div class="empty"><b>관련 블로그 글이 여기에 표시됩니다.</b>블로그에 {t["label"]} 관련 글을 올리면 매일 아침 자동으로 추가됩니다.</div>
+<!-- FEED:{t["feed"]}:END -->
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">자주 묻는 질문</p>
+        <h2>{t["label"]} 상담 전에 많이 물어보시는 것</h2>
+      </div>
+      <dl class="faq">
+{faq}
+      </dl>
+    </div>
+  </section>
+
+''' + band(cur)
+
 def body(cur):
+    if cur in TOPICS:
+        return topic_body(cur)
     if cur == "home":
         hero = HERO
         hero = re.sub(r'(<ul class="focus-tags" aria-label="재활 분야">\n).*?(\n        </ul>)', lambda m: m.group(1) + tags(cur) + m.group(2), hero, flags=re.S)
@@ -256,7 +340,7 @@ def body(cur):
 
   <section class="block first">
     <div class="wrap">
-{focus_detail()}
+{focus_detail(cur)}
     </div>
   </section>
 
@@ -321,6 +405,21 @@ def jsonld(cur):
             "itemListElement": [
                 {"@type": "ListItem", "position": 1, "name": "홈", "item": abs_url("home")},
                 {"@type": "ListItem", "position": 2, "name": P[cur][3], "item": abs_url(cur)}]}]
+    if cur in TOPICS:
+        t = TOPICS[cur]
+        out["@graph"].append({
+            "@type": "Service",
+            "name": t["h1"],
+            "serviceType": t["label"],
+            "description": t["desc"],
+            "url": abs_url(cur),
+            "areaServed": {"@type": "City", "name": "부산광역시"},
+            "provider": {"@id": f"{DOMAIN}/#center"},
+        })
+        out["@graph"].append({
+            "@type": "FAQPage",
+            "mainEntity": [{"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in t["faq"]],
+        })
     if cur == "consult":
         faq = next(g for g in GRAPH["@graph"] if g["@type"] == "FAQPage")
         faq = json.loads(json.dumps(faq))
@@ -376,6 +475,11 @@ section.block.first { border-top: 0; padding-top: 40px; }
 @media (max-width: 899px) { .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 599px) { .posts { grid-template-columns: 1fr; } }
 .pbody b { font-size: 15px; }
+.who { margin: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.who div { padding: 18px 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); display: grid; gap: 6px; }
+.who dt { font-weight: 700; font-size: 17px; color: var(--pine); }
+.who dd { margin: 0; color: var(--muted); font-size: 15px; }
+.focus .more { font-size: 14.5px; }
 h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 #reviews .feed-head, #info > .wrap > .feed-head { margin-bottom: 24px; }
 .cp { display: grid; gap: 48px; }

@@ -28,7 +28,13 @@ MAX_VIDEOS = 15  # 유튜브 피드가 주는 최대 개수
 YOUTUBE_FEED_ENABLED = False
 MAX_POSTS = 4
 BLOG_ID = "hunkyle0104"
-THUMB_DIR = ROOT / "images" / "blog"  # 블로그 글 대표 사진을 저장하는 폴더
+THUMB_DIR = ROOT / "images" / "blog"
+# 주제별 페이지: 블로그 글 제목에 이 단어가 들어가면 그 페이지에 자동으로 붙음 (_src/topics.py와 같은 목록)
+TOPIC_PAGES = {
+    "BLOG_BACK": (ROOT / "back" / "index.html", ["허리", "디스크", "척추", "요통", "골반"]),
+    "BLOG_KNEE": (ROOT / "knee" / "index.html", ["무릎", "관절염", "십자인대", "반월판", "슬개"]),
+}
+TOPIC_MAX = 3  # 블로그 글 대표 사진을 저장하는 폴더
 
 # 'PT 후기·운동정보' 페이지에 올릴 블로그 카테고리 ('원앤온리PT 동훈쌤' 아래 하위 카테고리 이름과 똑같이 적기)
 # 비워두면 ([]) 모든 글을 올립니다.
@@ -113,8 +119,6 @@ def blog_items():
         img = re.search(r'<img[^>]+src=["\']([^"\']+)', html.unescape(raw))
         items.append({"title": title, "url": url, "date": date, "category": category,
                       "desc": desc, "log_no": log_no, "rss_img": img.group(1) if img else ""})
-        if len(items) >= MAX_POSTS:
-            break
     # 카테고리 이름이 맞는지 확인할 수 있도록 실행 기록에 남김
     print("블로그 RSS에서 본 카테고리:", ", ".join(sorted(c for c in seen if c)))
     return items
@@ -235,14 +239,32 @@ def main():
         print(f"유튜브 {len(yt)}개")
     except Exception as e:
         print("유튜브 피드를 읽지 못했습니다. 기존 목록을 유지합니다:", e)
+    pages = {}  # 주제 페이지 경로 -> (원본, 바뀐 내용)
     try:
-        bl = blog_items()
-        save_thumbnails(bl)
-        if bl:
-            text = replace_block(text, "BLOG", render_blog(bl))
-        print(f"블로그 {len(bl)}개")
+        all_posts = blog_items()
+        latest = all_posts[:MAX_POSTS]
+        topic_sel = {}
+        for name, (path, words) in TOPIC_PAGES.items():
+            topic_sel[name] = [p for p in all_posts if any(w in p["title"] for w in words)][:TOPIC_MAX]
+        union = {id(p): p for p in latest + [p for v in topic_sel.values() for p in v]}
+        save_thumbnails(list(union.values()))
+        if latest:
+            text = replace_block(text, "BLOG", render_blog(latest))
+        print(f"블로그 {len(latest)}개 (전체 후보 {len(all_posts)}개)")
+        for name, (path, words) in TOPIC_PAGES.items():
+            if not path.exists():
+                continue
+            src = path.read_text(encoding="utf-8")
+            new_src = replace_block(src, name, render_blog(topic_sel[name])) if topic_sel[name] else src
+            pages[path] = (src, new_src)
+            print(f"{name}: {len(topic_sel[name])}개")
     except Exception as e:
         print("블로그 피드를 읽지 못했습니다. 기존 목록을 유지합니다:", e)
+
+    for path, (src, new_src) in pages.items():
+        if new_src != src:
+            path.write_text(new_src, encoding="utf-8")
+            print(f"{path.parent.name} 페이지 갱신")
 
     if text != original:
         INDEX.write_text(text, encoding="utf-8")
