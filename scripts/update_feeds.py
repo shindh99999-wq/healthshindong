@@ -34,7 +34,7 @@ TOPIC_PAGES = {
     "BLOG_BACK": (ROOT / "back" / "index.html", ["허리", "디스크", "척추", "요통", "골반"]),
     "BLOG_KNEE": (ROOT / "knee" / "index.html", ["무릎", "관절염", "십자인대", "반월판", "슬개"]),
     "BLOG_ANKLE": (ROOT / "ankle" / "index.html", ["발목", "비골", "골절", "깁스", "종아리"]),
-    "BLOG_SURGERY": (ROOT / "surgery" / "index.html", ["수술"]),
+    "BLOG_SURGERY": (ROOT / "surgery" / "index.html", [r"(?<!비)수술"]),  # '비수술'은 제외
 }
 TOPIC_MAX = 3  # 블로그 글 대표 사진을 저장하는 폴더
 
@@ -247,7 +247,7 @@ def main():
         latest = all_posts[:MAX_POSTS]
         topic_sel = {}
         for name, (path, words) in TOPIC_PAGES.items():
-            topic_sel[name] = [p for p in all_posts if any(w in p["title"] for w in words)][:TOPIC_MAX]
+            topic_sel[name] = [p for p in all_posts if any(re.search(w, p["title"]) for w in words)][:TOPIC_MAX]
         union = {id(p): p for p in latest + [p for v in topic_sel.values() for p in v]}
         save_thumbnails(list(union.values()))
         if latest:
