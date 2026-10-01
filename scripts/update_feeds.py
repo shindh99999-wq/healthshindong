@@ -6,6 +6,7 @@ GitHub Actions가 매일 실행합니다(.github/workflows/update-feeds.yml). �
 import html
 import re
 import sys
+import time
 import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
@@ -16,7 +17,11 @@ ROOT = Path(__file__).resolve().parent.parent
 INDEX = ROOT / "content" / "index.html"
 SITEMAP = ROOT / "sitemap.xml"
 
-YOUTUBE_RSS = "https://www.youtube.com/feeds/videos.xml?channel_id=UCLtCTZHiue8-5Cg2CtdZDSg"
+YOUTUBE_RSS = [
+    "https://www.youtube.com/feeds/videos.xml?channel_id=UCLtCTZHiue8-5Cg2CtdZDSg",
+    # 같은 채널의 '업로드 영상' 목록 (위 주소가 가끔 404를 줄 때 대신 사용)
+    "https://www.youtube.com/feeds/videos.xml?playlist_id=UULtCTZHiue8-5Cg2CtdZDSg",
+]
 BLOG_RSS = "https://rss.blog.naver.com/hunkyle0104.xml"
 MAX_VIDEOS = 6
 MAX_POSTS = 6
@@ -44,8 +49,22 @@ def fetch(url):
         return r.read()
 
 
+def fetch_any(urls, tries=3):
+    """여러 주소를 번갈아 몇 번 시도해서 처음 성공한 응답을 돌려줌"""
+    last = None
+    for attempt in range(tries):
+        for url in urls:
+            try:
+                return fetch(url)
+            except Exception as e:
+                last = e
+                print(f"  {url} 실패 ({e})")
+        time.sleep(5 * (attempt + 1))
+    raise last
+
+
 def youtube_items():
-    root = ET.fromstring(fetch(YOUTUBE_RSS))
+    root = ET.fromstring(fetch_any(YOUTUBE_RSS))
     items = []
     for e in root.findall("atom:entry", NS)[:MAX_VIDEOS]:
         vid = e.findtext("yt:videoId", default="", namespaces=NS)
