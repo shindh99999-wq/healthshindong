@@ -33,7 +33,7 @@
 
 ## 4. 통계 (Google Analytics 4)
 1. analytics.google.com → 속성 만들기 → 웹 스트림에 도메인 등록 → 측정 ID(`G-로 시작`) 복사
-2. 6개 페이지의 `G-XXXXXXXXXX` 를 그 ID로 모두 바꾸기
+2. 측정 ID `G-0RNV89RTBC` 가 6개 페이지에 들어가 있음
 3. 하루 정도 지나면 관리 → 이벤트 에서 `generate_lead` 를 **주요 이벤트(전환)** 로 표시
 4. 관리 → 맞춤 정의 → 맞춤 측정기준 추가: `platform`, `method`, `link_location` (이벤트 범위)
 
