@@ -25,7 +25,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "feed-bot"
             git config user.email "feed-bot@users.noreply.github.com"
-            git add -A content back knee images/blog sitemap.xml
+            git add -A content back knee ankle surgery images/blog sitemap.xml
             git commit -m "콘텐츠 자동 업데이트"
             git push
           fi

@@ -33,6 +33,8 @@ THUMB_DIR = ROOT / "images" / "blog"
 TOPIC_PAGES = {
     "BLOG_BACK": (ROOT / "back" / "index.html", ["허리", "디스크", "척추", "요통", "골반"]),
     "BLOG_KNEE": (ROOT / "knee" / "index.html", ["무릎", "관절염", "십자인대", "반월판", "슬개"]),
+    "BLOG_ANKLE": (ROOT / "ankle" / "index.html", ["발목", "비골", "골절", "깁스", "종아리"]),
+    "BLOG_SURGERY": (ROOT / "surgery" / "index.html", ["수술"]),
 }
 TOPIC_MAX = 3  # 블로그 글 대표 사진을 저장하는 폴더
 
@@ -205,7 +207,7 @@ def render_blog(items):
     lis = []
     for p in items:
         if p.get("thumb"):
-            pic = f'<span class="pthumb"><img src="{esc(p["thumb"])}" alt="" loading="lazy"></span>'
+            pic = f'<span class="pthumb"><img src="{esc(p["thumb"])}" alt="{esc(p["title"])} 대표 이미지" loading="lazy"></span>'
         else:
             pic = f'<span class="pthumb pthumb-empty"><span>{esc(p["category"])}</span></span>'
         desc = f'<span class="pdesc">{esc(p["desc"])}</span>' if p.get("desc") else ""

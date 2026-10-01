@@ -41,21 +41,21 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
-ASSET_V = "20261001f"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
+ASSET_V = "20261002a"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
-    ("home", "", "index.html", "홈", "부산교대 재활PT · 원앤온리PT 부산교대점 동훈쌤",
-     "부산 연제구 재활PT, 원앤온리PT 부산교대점 동훈쌤(신동훈). 만성 통증, 수술 후 재활, 무릎·허리 통증, 고혈압·당뇨·고지혈증 운동, 시니어 운동까지 1:1로 평가하고 운동으로 돕습니다. 네이버 예약, 전화 0507-1471-0290."),
-    ("about", "about/", "about.html", "소개", "소개 · 재활PT 동훈쌤 신동훈",
-     "부산교대 재활PT 트레이너 신동훈(동훈쌤) 소개. 아픈 부위만이 아니라 움직임 전체와 생활까지 함께 보는 생물심리사회적 관점으로 재활 운동을 지도합니다."),
-    ("program", "program/", "program.html", "운동 프로그램", "운동 프로그램 · 부산교대 재활PT 동훈쌤",
+    ("home", "", "index.html", "홈", "부산재활PT · 부산교대PT | 원앤온리PT 부산교대점 동훈쌤",
+     "부산교대역 인근 1:1 재활PT, 원앤온리PT 부산교대점 동훈쌤(신동훈)입니다. 허리·무릎·발목 통증이 있는 분과 수술 후 운동 회복이 필요한 분의 움직임을 평가하고, 통증 관리와 움직임 개선을 위한 운동 방향을 함께 설정합니다."),
+    ("about", "about/", "about.html", "소개", "동훈쌤 신동훈 소개 · 부산 재활PT 트레이너 | 원앤온리PT 부산교대점",
+     "원앤온리PT 부산교대점 대표 신동훈(동훈쌤) 소개. 부산외국어대학교 스포츠재활 석사, KESRA 한국운동과학연구협회 MASTER 강사. 경력·자격과 1:1 재활PT 비용을 안내합니다."),
+    ("program", "program/", "program.html", "운동 프로그램", "재활PT 프로그램 · 통증·수술 후 운동 | 부산교대 동훈쌤",
      "만성 통증, 수술 후 재활, 무릎 통증, 허리 통증, 대사성 질환(고혈압·당뇨·고지혈증), 시니어 운동. MAT·Motor Control·DNS·STC·기능성 운동·근력 운동으로 진행하는 부산 재활PT 프로그램."),
-    ("center", "center/", "center.html", "센터 안내", "센터 안내 · 원앤온리PT 부산교대점",
+    ("center", "center/", "center.html", "센터 안내", "원앤온리PT 부산교대점 위치·운영시간 | 동래·연산동에서 가까운 재활PT",
      "원앤온리PT 부산교대점 위치와 운영 시간. 부산광역시 연제구 명륜로 2번길 7, 삼익퓨처타워상가 306호. 평일 10시~22시, 토요일 10시~14시, 일·공휴일 휴무. 전화 0507-1471-0290."),
-    ("content", "content/", "content.html", "PT 후기·운동정보", "PT 후기·운동정보 · 부산교대 재활PT 동훈쌤",
+    ("content", "content/", "content.html", "PT 후기·운동정보", "재활PT 회원 후기·운동 정보 | 건강신동 동훈쌤",
      "부산교대 재활PT 동훈쌤의 실제 PT 후기와 회원 사례, 유튜브 건강신동 동훈쌤 영상과 건강·운동 정보 글을 모아 봅니다."),
-    ("consult", "consult/", "consult.html", "상담 문의", "상담 문의 · 부산교대 재활PT 동훈쌤",
+    ("consult", "consult/", "consult.html", "상담 문의", "재활PT 상담·예약 | 원앤온리PT 부산교대점 동훈쌤",
      "부산교대 재활PT 상담 문의. 네이버 예약, 전화 0507-1471-0290, 인스타그램 DM으로 문의하세요. 통증·수술 후 재활·대사성 질환 운동에 관해 자주 묻는 질문도 확인할 수 있습니다."),
 ]
 for _k, _t in TOPICS.items():
@@ -82,6 +82,7 @@ FOCUS = [
     ("surgery", "수술 후 재활", "십자인대·반월판, 어깨, 허리 수술 이후 병원 재활을 마친 다음 단계. 담당 의료진의 지침 범위 안에서 일상과 운동 복귀까지 단계적으로 진행합니다."),
     ("knee", "무릎 통증", "계단, 쪼그려 앉기, 달리기에서 아픈 무릎. 무릎만 보지 않고 고관절과 발목이 무릎에 주는 부담까지 함께 찾아 조정합니다."),
     ("back", "허리 통증", "디스크 진단 이후나 자주 반복되는 허리 통증. 호흡과 몸통 안정성을 다시 세우고, 굽히고 들어 올리는 동작을 안전하게 다시 익힙니다."),
+    ("ankle", "발목 통증·골절 재활", "발목 골절 후 깁스를 풀었는데 걷기가 어색하거나 자주 접질려 불안한 발목. 발 딛기, 체중 싣기, 균형, 까치발까지 단계별로 다시 익힙니다."),
     ("metabolic", "대사성 질환", "고혈압, 당뇨, 고지혈증이 있어도 운동은 관리의 기본입니다. 혈압과 혈당 상태, 복용 중인 약을 확인하고 자신에게 필요한 유산소 운동과 근력 운동을 단계별로 진행합니다."),
     ("senior", "시니어 운동", "나이가 들면서 줄어드는 근력과 균형을 지키는 운동. 낙상을 예방하고 계단 오르기, 의자에서 일어나기 같은 동작을 연습해서, 관절이 아픈 분들도 산책, 장보기, 외출 같은 일상생활을 다시 편하게 할 수 있도록 1:1로 돕습니다."),
 ]
@@ -118,7 +119,7 @@ def header(cur):
 </header>'''
 
 def footer(cur):
-    links = " · ".join(f'<a href="{href(cur, k)}">{P[k][3]}</a>' for k in ["home", "about", "program", "back", "knee", "center", "content", "consult"])
+    links = " · ".join(f'<a href="{href(cur, k)}">{P[k][3]}</a>' for k in ["home", "about", "program", "back", "knee", "ankle", "surgery", "center", "content", "consult"])
     return f'''<footer>
   <div class="wrap">
     <p class="flinks">{links}</p>
@@ -179,7 +180,7 @@ FAQ_DIET_A = "가능합니다. 무리한 식단이나 고강도 운동부터 시
 
 
 CREDS = [("학력", "동아대학교 체육학과 졸업"), ("학력", "부산외국어대학교 스포츠재활 석사 졸업"),
-         ("강의", "KESRA 한국운동과학연구협회 MASTER 강사"),
+         ("강의", "KESRA 한국운동과학연구협회 MASTER 강사"), ("강의", "트레이너·필라테스 강사 대상 교육"),
          ("자격", "생활스포츠지도사 2급 (보디빌딩)"), ("자격", "Muscle Activation Technique (MAT)"),
          ("자격", "Movement Science Specialist (MSS)")]
 PRICES = [(1, 10), (10, 80), (20, 150), (30, 210), (50, 350)]
@@ -222,6 +223,20 @@ def _cred_price():
 
 CRED_PRICE = _cred_price()
 
+DIRECTIONS = '''  <section class="block">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">찾아오는 길</p>
+        <h2>부산교대역 인근, 동래·연산동에서도 가까워요</h2>
+      </div>
+      <dl class="who-list">
+          <div><dt>지하철</dt><dd>부산교대역에서 가깝습니다. 동래, 연산동, 온천장 쪽에서 오시는 회원분들도 많이 다니세요.</dd></div>
+          <div><dt>건물</dt><dd>삼익퓨처타워상가 3층 306호입니다. 건물 앞에서 위치가 헷갈리시면 전화 0507-1471-0290으로 연락 주세요.</dd></div>
+          <div><dt>첫 방문</dt><dd>예약제로 운영합니다. 네이버 예약이나 전화로 시간을 정한 뒤 오시면 상담과 움직임 평가부터 진행합니다.</dd></div>
+      </dl>
+    </div>
+  </section>'''
+
 def topic_body(cur):
     t = TOPICS[cur]
     who = "\n".join(f'          <div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in t["who"])
@@ -229,7 +244,7 @@ def topic_body(cur):
     vids = "\n".join(
         f'            <li class="card"><a href="https://www.youtube.com/watch?v={vid}" target="_blank" rel="noopener" '
         f'data-track="platform" data-platform="youtube" data-location="{cur}_video">'
-        f'<span class="thumb"><img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></span>'
+        f'<span class="thumb"><img src="https://i.ytimg.com/vi/{vid}/hqdefault.jpg" alt="{title} 영상 썸네일" loading="lazy" width="480" height="360"></span>'
         f'<b>{title}</b></a></li>' for vid, title in t["videos"])
     faq = "\n".join(f'        <div><dt>{q}</dt><dd>{a}</dd></div>' for q, a in t["faq"])
     return page_head(t["eyebrow"], t["h1"], t["lead"]) + f'''
@@ -237,7 +252,7 @@ def topic_body(cur):
   <section class="block first">
     <div class="wrap">
       <div class="head"><h2>{t["who_title"]}</h2></div>
-      <dl class="who">
+      <dl class="who-list">
 {who}
       </dl>
     </div>
@@ -292,7 +307,22 @@ def topic_body(cur):
     </div>
   </section>
 
+  <section class="block">
+    <div class="wrap">
+      <div class="head"><p class="eyebrow">함께 보면 좋은 페이지</p></div>
+      <div class="fgrid">
+{related(cur)}
+      </div>
+    </div>
+  </section>
+
 ''' + band(cur)
+
+def related(cur):
+    cards = [(href(cur, k), TOPICS[k]["h1"], TOPICS[k]["lead"].split(". ")[0] + ".") for k in TOPICS if k != cur]
+    cards.append((href(cur, "content"), "회원 후기·운동 정보", "실제 회원의 재활 과정과 운동 영상, 블로그 글을 모아 봅니다."))
+    cards.append((href(cur, "consult"), "상담·예약", "네이버 예약, 전화, 인스타그램 DM으로 상담할 수 있어요."))
+    return "\n".join(f'        <a class="fcard" href="{h}"><b>{t}</b><span>{d}</span></a>' for h, t, d in cards)
 
 def body(cur):
     if cur in TOPICS:
@@ -332,14 +362,15 @@ def body(cur):
 
     if cur == "about":
         sec = strip_head(ABOUT).replace('<section class="block" id="about">', '<section class="block first">')
-        return page_head("소개", "통증 부위보다, 그 부위가 일을 떠안게 된 이유를 찾습니다") + "\n\n" + sec + "\n\n" + CRED_PRICE + "\n\n" + band(cur)
+        return page_head("소개", "동훈쌤 신동훈 · 부산 재활PT 트레이너", "통증 부위보다, 그 부위가 일을 떠안게 된 이유를 찾습니다.") + "\n\n" + sec + "\n\n" + CRED_PRICE + "\n\n" + band(cur)
 
     if cur == "program":
-        return page_head("운동 프로그램", "이런 분들의 재활과 운동을 돕습니다",
-                         "통증 재활부터 대사성 질환 운동, 시니어 운동까지 1:1로 평가하고 진행합니다.") + f'''
+        return page_head("운동 프로그램", "1:1 재활PT 프로그램",
+                         "통증이 있는 분의 운동부터 수술 후 운동 회복, 대사성 질환 운동, 시니어 운동까지 움직임을 평가하고 1:1로 진행합니다.") + f'''
 
   <section class="block first">
     <div class="wrap">
+      <div class="head"><h2>이런 분들의 재활과 운동을 돕습니다</h2></div>
 {focus_detail(cur)}
     </div>
   </section>
@@ -368,17 +399,16 @@ def body(cur):
 
     if cur == "center":
         sec = strip_head(CENTER).replace('<section class="block" id="center">', '<section class="block first">')
-        return page_head("센터 안내", "원앤온리PT 부산교대점", "부산광역시 연제구 명륜로 2번길 7, 삼익퓨처타워상가 306호") + "\n\n" + sec + "\n\n" + band(cur)
+        return page_head("센터 안내", "원앤온리PT 부산교대점 위치와 운영 시간", "부산광역시 연제구 명륜로 2번길 7, 삼익퓨처타워상가 306호") + "\n\n" + sec + "\n\n" + DIRECTIONS + "\n\n" + band(cur)
 
     if cur == "content":
         sec = strip_head(CONTENT).replace('<section class="block" id="content">', '<section class="block first">')
-        return page_head("PT 후기·운동정보", "새 영상과 글이 올라오면 여기에도 자동으로 올라옵니다",
-                         "유튜브 건강신동 동훈쌤과 네이버 블로그의 최신 후기·운동 정보입니다.") + "\n\n" + sec + "\n\n" + band(cur)
+        return page_head("PT 후기·운동정보", "재활PT 회원 후기와 운동 정보",
+                         "유튜브 건강신동 동훈쌤과 네이버 블로그에 올라온 회원 사례와 운동 정보입니다. 새 영상과 글은 자동으로 추가됩니다.") + "\n\n" + sec + "\n\n" + band(cur)
 
     if cur == "consult":
         cons = CONSULT.replace('<section class="block" id="consult">', '<section class="block first">')
-        cons = cons.replace('<p class="eyebrow" style="color: var(--amber);">상담 문의</p>\n          <h2>', '<p class="eyebrow" style="color: var(--amber);">상담 문의</p>\n          <h1 class="ch1">')
-        cons = cons.replace('편하게 말씀해 주세요</h2>', '편하게 말씀해 주세요</h1>')
+        cons = page_head("상담 문의", "재활PT 상담·예약", "네이버 예약, 전화, 인스타그램 DM으로 편하게 문의하세요. 첫 시간은 상담과 움직임 평가부터 진행합니다.") + "\n\n" + cons
         faq = FAQ.replace('<section class="block" id="faq">', '<section class="block" id="faq">')
         extra = (f'\n        <div><dt>{FAQ_PRICE_Q}</dt><dd>{FAQ_PRICE_A}</dd></div>'
                  f'\n        <div><dt>{FAQ_NEW_Q}</dt><dd>{FAQ_NEW_A}</dd></div>'
@@ -446,6 +476,7 @@ EXTRA_CSS = """
 section.block.first { border-top: 0; padding-top: 40px; }
 .consult .ch1 { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 4.2vw, 40px); line-height: 1.25; color: var(--bg); }
 .fgrid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+@media (min-width: 1000px) { .fgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .fcard { display: grid; gap: 6px; align-content: start; padding: 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); text-decoration: none; transition: border-color .15s ease; }
 .fcard:hover { border-color: var(--pine); }
 .fcard b { font-size: 18px; color: var(--pine); }
@@ -479,11 +510,14 @@ section.block.first { border-top: 0; padding-top: 40px; }
 @media (max-width: 899px) { .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 599px) { .posts { grid-template-columns: 1fr; } }
 .pbody b { font-size: 15px; }
-.who { margin: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
-.who div { padding: 18px 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); display: grid; gap: 6px; }
-.who dt { font-weight: 700; font-size: 17px; color: var(--pine); }
-.who dd { margin: 0; color: var(--muted); font-size: 15px; }
+.who-list { margin: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.who-list div { padding: 18px 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); display: grid; gap: 6px; }
+.who-list dt { font-weight: 700; font-size: 17px; color: var(--pine); }
+.who-list dd { margin: 0; color: var(--muted); font-size: 15px; }
 .focus .more { font-size: 14.5px; }
+.hero .hero-kicker { font-family: var(--body); font-weight: 700; font-size: clamp(16px, 2vw, 19px); line-height: 1.5; letter-spacing: 0; color: var(--pine); margin: 0 0 14px; }
+.hero .hero-title { font-family: var(--display); font-weight: 400; font-size: clamp(38px, 7vw, 66px); line-height: 1.12; letter-spacing: -.015em; text-wrap: balance; margin: 0; }
+.hero .hero-title em { font-style: normal; color: var(--pine); }
 .map-embed { margin-top: 20px; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); background: var(--pine-soft); }
 .map-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
 @media (max-width: 599px) { .map-embed { aspect-ratio: 4 / 3; } }
@@ -518,7 +552,6 @@ def head(cur, prev_main=False):
 <meta name="description" content="{desc}">
 <link rel="canonical" href="{url}">
 <meta name="robots" content="index, follow">
-<meta name="google-site-verification" content="GOOGLE_VERIFICATION_CODE">
 <meta name="naver-site-verification" content="c7afb1874282eedac691f4ad4150c04a3f6c510c">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
@@ -542,8 +575,8 @@ def navrow(cur):
 
 def render(cur):
     hdr = header(cur).replace("  </div>\n</header>", "  </div>\n  " + navrow(cur) + "\n</header>")
-    img = "images/profile.webp" if (MODE == "preview" or cur == "home") else "../images/profile.webp"
-    main = body(cur).replace('src="images/profile.webp"', f'src="{img}"')
+    img = "images/shin-donghun-donghunssam.webp" if (MODE == "preview" or cur == "home") else "../images/shin-donghun-donghunssam.webp"
+    main = body(cur).replace('src="images/shin-donghun-donghunssam.webp"', f'src="{img}"')
     script = (f"<script>\n{JS}</script>" if MODE == "preview"
               else f'<script src="{"" if cur == "home" else "../"}assets/site.js?v={ASSET_V}" defer></script>')
     inner = f"{hdr}\n\n<main>\n{main}\n</main>\n\n{footer(cur)}\n\n{script}\n"
@@ -555,11 +588,30 @@ def main():
     if MODE == "preview":
         shutil.rmtree(OUT, ignore_errors=True)
         (OUT / "images").mkdir(parents=True)
-        shutil.copy(SITE / "images/profile.webp", OUT / "images/profile.webp")
+        shutil.copy(SITE / "images/shin-donghun-donghunssam.webp", OUT / "images/shin-donghun-donghunssam.webp")
     else:
         (OUT / "assets").mkdir(exist_ok=True)
         (OUT / "assets/site.css").write_text(CSS + EXTRA_CSS, encoding="utf-8")
         (OUT / "assets/site.js").write_text(JS, encoding="utf-8")
+    if MODE == "site":
+        # 없는 주소로 들어왔을 때 보여줄 404 페이지 (검색엔진에는 색인하지 않음)
+        nf = render("home")
+        head_part, rest = nf.split("<main>", 1)
+        tail = rest.split("</main>", 1)[1]
+        nf = head_part + """<main>
+  <section class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">404</p>
+      <h1>찾으시는 페이지가 없어요</h1>
+      <p class="lead">주소가 바뀌었거나 없어진 페이지예요. 아래에서 원하시는 곳으로 이동해 주세요.</p>
+      <p class="next"><a class="btn btn-cta" href="./">홈으로 가기</a> <a class="btn btn-line" href="consult/">상담 문의</a></p>
+    </div>
+  </section>
+</main>""" + tail
+        nf = re.sub(r'(href|src)="(?!https?:|tel:|mailto:|#|/|data:)', r'\1="/', nf).replace('href="/./"', 'href="/"')
+        nf = nf.replace('<meta name="robots" content="index, follow">', '<meta name="robots" content="noindex">')
+        nf = re.sub(r'<link rel="canonical"[^>]*>\n', '', nf)
+        (OUT / "404.html").write_text(nf, encoding="utf-8")
     for key, path, file, *_ in PAGES:
         target = OUT / file if MODE == "preview" else OUT / path / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)
