@@ -398,6 +398,10 @@ def jsonld(cur):
     for g in graph:
         if "ExerciseGym" in g["@type"]:
             g["priceRange"] = "1회 10만 원, 10회 80만 원, 20회 150만 원, 30회 210만 원, 50회 350만 원"
+            # 구글 지도(구글 비즈니스 프로필)와 네이버 플레이스의 같은 센터임을 알려줌
+            gmap = "https://www.google.com/maps/search/?api=1&query=%EC%9B%90%EC%95%A4%EC%98%A8%EB%A6%ACPT+%EB%B6%80%EC%82%B0%EA%B5%90%EB%8C%80%EC%A0%90"
+            g["hasMap"] = gmap
+            g["sameAs"] = list(dict.fromkeys(list(g.get("sameAs", [])) + [gmap, BOOK]))
     out = {"@context": "https://schema.org", "@graph": graph}
     if cur != "home":
         out["@graph"] = out["@graph"] + [{
