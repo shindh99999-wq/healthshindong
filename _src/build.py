@@ -41,7 +41,7 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
-ASSET_V = "20261001e"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
+ASSET_V = "20261001f"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
@@ -480,6 +480,10 @@ section.block.first { border-top: 0; padding-top: 40px; }
 .who dt { font-weight: 700; font-size: 17px; color: var(--pine); }
 .who dd { margin: 0; color: var(--muted); font-size: 15px; }
 .focus .more { font-size: 14.5px; }
+.map-embed { margin-top: 20px; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); background: var(--pine-soft); }
+.map-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+@media (max-width: 599px) { .map-embed { aspect-ratio: 4 / 3; } }
+.map-note { margin-top: 10px; color: var(--muted); font-size: 14px; }
 h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 #reviews .feed-head, #info > .wrap > .feed-head { margin-bottom: 24px; }
 .cp { display: grid; gap: 48px; }
