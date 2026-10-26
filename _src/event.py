@@ -16,8 +16,8 @@ EVENT_MAX_OFF = max(n - e for _, n, e in EVENT_PRICES)
 EVENT_HIDE = (
     "<script>(function(){var end=Date.parse('" + EVENT_END_ISO + "');"
     "if(Date.now()>=end){document.querySelectorAll('.js-event').forEach(function(e){e.remove();});return;}"
-    "var d=document.getElementById('evDday');if(d){var n=Math.ceil((end-Date.now())/864e5);"
-    "d.textContent=n<=1?'오늘 마감':'마감까지 D-'+(n-1);d.hidden=false;}})();</script>"
+    "var n=Math.ceil((end-Date.now())/864e5);"
+    "document.querySelectorAll('.ev-dday').forEach(function(d){d.textContent=n<=1?'오늘 마감':'마감까지 D-'+(n-1);d.hidden=false;});})();</script>"
 )
 
 
@@ -36,8 +36,8 @@ def event_section(book, img_prefix=""):
           <p class="ev-badge">원앤온리PT 5주년 기념 이벤트</p>
           <h2 id="evTitle">“원앤온리는 왜 할인 안 해요?”</h2>
           <p class="ev-sub">매달 들었던 질문. 그래서, 준비했습니다.</p>
-          <p class="ev-big">최대 <em>{EVENT_MAX_OFF}만 원</em> 할인</p>
-          <p class="ev-meta"><b>11월 30일까지</b><span>선착순 20명 한정</span><span class="ev-dday" id="evDday" hidden></span></p>
+          <p class="ev-big"><span>최대 <em>{EVENT_MAX_OFF}만 원</em> 할인!</span></p>
+          <p class="ev-meta"><b>11월 30일까지</b><span>선착순 20명 한정</span><span class="ev-dday" hidden></span></p>
           <p class="ev-for"><b>허리 · 무릎 · 어깨 · 관절 통증 · 수술 후 재활 · 다이어트</b><br>내 몸 상태에 맞춘 1:1 평가 기반 재활 트레이닝</p>
           <div class="ev-book">
             <div class="ev-actions">
@@ -70,58 +70,70 @@ def event_section(book, img_prefix=""):
 '''
 
 
-def event_strip(home_href):
+def event_strip(home_href, with_script=True):
     if not EVENT_ON:
         return ""
+    hide = EVENT_HIDE if with_script else ""
     return f'''<!-- EVENT:START -->
-<a class="ev-strip js-event" href="{home_href}#event"><b>5주년 기념 이벤트</b> 최대 {EVENT_MAX_OFF}만 원 할인 · 11월 30일까지 선착순 20명 <span aria-hidden="true">→</span></a>
-{EVENT_HIDE}
+<a class="ev-strip js-event" href="{home_href}#event"><b>🎉 5주년 이벤트</b><span class="ev-s-main">최대 {EVENT_MAX_OFF}만 원 할인</span><span class="ev-s-sub">11월 30일까지 · 선착순 20명</span><span class="ev-dday ev-s-dday" hidden></span><span class="ev-s-go">자세히 보기 →</span></a>
+{hide}
 <!-- EVENT:END -->
 '''
 
 
 EVENT_CSS = """
-/* ---------- 5주년 이벤트 (11/30까지) ---------- */
-.event { padding-block: 24px 8px; }
-.ev-card { display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 24px; background: #164E45; color: #fff; }
+/* ---------- 5주년 이벤트 (11/30까지) — 포스터 색: 파랑 #0B5CB8, 주황 #E8501A ---------- */
+.event { padding-block: 24px 8px; scroll-margin-top: 70px; }
+.ev-card { position: relative; overflow: hidden; display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 24px; background: linear-gradient(140deg, #0B5CB8 0%, #0A4A96 100%); color: #fff; box-shadow: 0 18px 40px -18px rgba(11,92,184,.55); }
+.ev-card::after { content: "5"; position: absolute; right: -18px; top: -60px; font-family: var(--display); font-size: 300px; line-height: 1; color: rgba(255,255,255,.06); pointer-events: none; }
+.ev-card > * { position: relative; z-index: 1; }
 @media (min-width: 900px) { .ev-card { grid-template-columns: 1fr 1.05fr; gap: 44px; align-items: start; } }
-.ev-badge { display: inline-block; margin: 0 0 14px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 14px; font-weight: 700; }
-.ev-card h2 { color: #fff; font-size: clamp(28px, 4.6vw, 42px); }
-.ev-sub { margin-top: 10px; color: rgba(255,255,255,.82); font-size: 17px; }
-.ev-big { margin-top: 18px; font-family: var(--display); font-size: clamp(38px, 6.4vw, 58px); line-height: 1.1; }
-.ev-big em { font-style: normal; color: #F2B544; }
-.ev-meta { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
-.ev-meta > * { padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,.12); font-size: 15px; }
-.ev-meta b { background: #F2B544; color: #3A2700; }
-.ev-dday { font-family: var(--mono); font-weight: 600; }
-.ev-for { margin-top: 18px; color: rgba(255,255,255,.88); font-size: 15.5px; }
-.ev-actions { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
-.ev-btn { min-height: 54px; padding: 10px 24px; line-height: 1.35; text-align: center; font-size: 16.5px; background: #F2B544; color: #3A2700; }
-.ev-actions .btn-line { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.4); min-height: 54px; }
+.ev-badge { display: inline-block; margin: 0 0 14px; padding: 7px 14px; border-radius: 999px; background: #fff; color: #0B5CB8; font-size: 14.5px; font-weight: 700; }
+.ev-card h2 { color: #fff; font-size: clamp(30px, 4.8vw, 44px); }
+.ev-sub { margin-top: 10px; color: rgba(255,255,255,.88); font-size: 17px; }
+.ev-big { margin-top: 20px; }
+.ev-big span { display: inline-block; padding: 10px 18px 8px; border-radius: 14px; background: #fff; color: #E8501A; font-family: var(--display); font-size: clamp(36px, 6.4vw, 58px); line-height: 1.1; transform: rotate(-1.5deg); box-shadow: 6px 6px 0 rgba(0,0,0,.18); }
+.ev-big em { font-style: normal; }
+.ev-meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+.ev-meta > * { padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,.16); font-size: 15px; font-weight: 600; }
+.ev-meta b { background: #FFD43B; color: #2B2100; }
+.ev-dday { font-family: var(--mono); font-weight: 700; }
+.ev-meta .ev-dday { background: #E8501A; color: #fff; }
+.ev-for { margin-top: 18px; color: rgba(255,255,255,.92); font-size: 15.5px; }
+.ev-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.ev-btn { min-height: 58px; padding: 10px 26px; line-height: 1.35; text-align: center; font-size: 17px; background: #D9480F; color: #fff; box-shadow: 0 0 0 0 rgba(255,212,59,.7); animation: evPulse 2.2s ease-out infinite; }
+.ev-btn:hover { background: #C23E0B; }
+@keyframes evPulse { 0% { box-shadow: 0 0 0 0 rgba(255,212,59,.75); } 70% { box-shadow: 0 0 0 14px rgba(255,212,59,0); } 100% { box-shadow: 0 0 0 0 rgba(255,212,59,0); } }
+@media (prefers-reduced-motion: reduce) { .ev-btn { animation: none; } }
+.ev-actions .btn-line { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.55); min-height: 58px; }
 .ev-book { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; }
-.ev-book .ev-actions { margin-top: 0; }
 .ev-qr { display: none; align-items: center; gap: 12px; text-decoration: none; color: #fff; font-size: 14px; line-height: 1.5; }
 .ev-qr img { width: 112px; height: 112px; border-radius: 10px; border: 4px solid #03C75A; background: #fff; }
 @media (min-width: 900px) { .ev-qr { display: flex; } }
 .ev-table { background: var(--surface); color: var(--ink); border-radius: 18px; padding: clamp(16px, 2.6vw, 26px); min-width: 0; }
 .ev-price { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
-.ev-price caption { text-align: left; font-weight: 700; font-size: 15px; color: var(--pine); padding-bottom: 10px; }
+.ev-price caption { text-align: left; font-weight: 700; font-size: 15px; color: #0B5CB8; padding-bottom: 10px; }
 .ev-price th, .ev-price td { padding: 11px 6px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
 .ev-price th:first-child { text-align: left; }
 .ev-price thead th { font-size: 13px; font-weight: 500; color: var(--muted); border-bottom: 2px solid var(--ink); }
 .ev-price tbody th { font-weight: 700; }
 .ev-was { color: var(--muted); font-size: 15px; }
-.ev-now { font-family: var(--display); font-size: 21px; color: var(--pine); }
-.ev-off { font-size: 14px; font-weight: 700; color: #B4471B; }
+.ev-now { font-family: var(--display); font-size: 22px; color: #0B5CB8; }
+.ev-off { font-size: 14px; font-weight: 700; color: #C8410F; }
 .ev-notes { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; line-height: 1.65; display: grid; gap: 4px; }
 @media (max-width: 480px) {
   .ev-price th, .ev-price td { padding: 10px 4px; }
   .ev-now { font-size: 19px; }
   .ev-btn, .ev-actions .btn-line { width: 100%; }
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ev-off { color: #F59E6B; } }
-:root[data-theme="dark"] .ev-off { color: #F59E6B; }
-.ev-strip { display: block; padding: 10px 20px; text-align: center; background: #164E45; color: #fff; text-decoration: none; font-size: 14.5px; line-height: 1.5; }
-.ev-strip b { color: #F2B544; margin-right: 6px; }
-.ev-strip:hover { text-decoration: underline; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ev-now, :root:not([data-theme="light"]) .ev-price caption { color: #7DB6FF; } :root:not([data-theme="light"]) .ev-off { color: #FF8A5B; } }
+:root[data-theme="dark"] .ev-now, :root[data-theme="dark"] .ev-price caption { color: #7DB6FF; } :root[data-theme="dark"] .ev-off { color: #FF8A5B; }
+/* 모든 페이지 맨 위 이벤트 띠 */
+.ev-strip { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 12px; padding: 10px 16px; background: #E8501A; color: #fff; text-decoration: none; font-size: 15px; line-height: 1.45; text-align: center; }
+.ev-strip b { font-weight: 700; }
+.ev-s-main { font-weight: 700; color: #FFF3B0; }
+.ev-s-sub { opacity: .95; }
+.ev-s-dday { padding: 1px 8px; border-radius: 6px; background: #fff; color: #C8410F; font-size: 13.5px; }
+.ev-s-go { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 599px) { .ev-strip { font-size: 14px; gap: 2px 8px; padding: 9px 12px; } .ev-s-go { display: none; } }
 """

@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=20261026a">
+<link rel="stylesheet" href="assets/site.css?v=20261026b">
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -173,6 +173,10 @@
 </script>
 </head>
 <body>
+<!-- EVENT:START -->
+<a class="ev-strip js-event" href="#event"><b>🎉 5주년 이벤트</b><span class="ev-s-main">최대 60만 원 할인</span><span class="ev-s-sub">11월 30일까지 · 선착순 20명</span><span class="ev-dday ev-s-dday" hidden></span><span class="ev-s-go">자세히 보기 →</span></a>
+
+<!-- EVENT:END -->
 <header class="top">
   <div class="wrap">
     <a class="brand" href="./"><b>동훈쌤</b><span>재활PT 신동훈</span></a>
@@ -197,8 +201,8 @@
           <p class="ev-badge">원앤온리PT 5주년 기념 이벤트</p>
           <h2 id="evTitle">“원앤온리는 왜 할인 안 해요?”</h2>
           <p class="ev-sub">매달 들었던 질문. 그래서, 준비했습니다.</p>
-          <p class="ev-big">최대 <em>60만 원</em> 할인</p>
-          <p class="ev-meta"><b>11월 30일까지</b><span>선착순 20명 한정</span><span class="ev-dday" id="evDday" hidden></span></p>
+          <p class="ev-big"><span>최대 <em>60만 원</em> 할인!</span></p>
+          <p class="ev-meta"><b>11월 30일까지</b><span>선착순 20명 한정</span><span class="ev-dday" hidden></span></p>
           <p class="ev-for"><b>허리 · 무릎 · 어깨 · 관절 통증 · 수술 후 재활 · 다이어트</b><br>내 몸 상태에 맞춘 1:1 평가 기반 재활 트레이닝</p>
           <div class="ev-book">
             <div class="ev-actions">
@@ -231,7 +235,7 @@
       </div>
     </div>
   </section>
-  <script>(function(){var end=Date.parse('2026-12-01T00:00:00+09:00');if(Date.now()>=end){document.querySelectorAll('.js-event').forEach(function(e){e.remove();});return;}var d=document.getElementById('evDday');if(d){var n=Math.ceil((end-Date.now())/864e5);d.textContent=n<=1?'오늘 마감':'마감까지 D-'+(n-1);d.hidden=false;}})();</script>
+  <script>(function(){var end=Date.parse('2026-12-01T00:00:00+09:00');if(Date.now()>=end){document.querySelectorAll('.js-event').forEach(function(e){e.remove();});return;}var n=Math.ceil((end-Date.now())/864e5);document.querySelectorAll('.ev-dday').forEach(function(d){d.textContent=n<=1?'오늘 마감':'마감까지 D-'+(n-1);d.hidden=false;});})();</script>
 <!-- EVENT:END -->
 <section class="hero">
     <div class="wrap">
@@ -350,6 +354,6 @@
   <a class="btn btn-cta" href="https://naver.me/Gq8oYAK2" target="_blank" rel="noopener" data-track="lead" data-method="naver_booking" data-location="mobile_dock">네이버 예약</a>
 </div>
 
-<script src="assets/site.js?v=20261026a" defer></script>
+<script src="assets/site.js?v=20261026b" defer></script>
 </body>
 </html>

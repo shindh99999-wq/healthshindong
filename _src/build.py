@@ -42,7 +42,7 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
-ASSET_V = "20261026a"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
+ASSET_V = "20261026b"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
@@ -580,8 +580,8 @@ def render(cur):
     main = body(cur).replace('src="images/shin-donghun-donghunssam.webp"', f'src="{img}"')
     script = (f"<script>\n{JS}</script>" if MODE == "preview"
               else f'<script src="{"" if cur == "home" else "../"}assets/site.js?v={ASSET_V}" defer></script>')
-    strip = "" if cur == "home" else event_strip(href(cur, "home"))
-    inner = f"{hdr}\n{strip}\n<main>\n{main}\n</main>\n\n{footer(cur)}\n\n{script}\n"
+    strip = event_strip("" if cur == "home" else href(cur, "home"), with_script=(cur != "home"))
+    inner = f"{strip}{hdr}\n\n<main>\n{main}\n</main>\n\n{footer(cur)}\n\n{script}\n"
     if MODE == "preview" and cur == "home":
         return head(cur) + "\n" + inner
     return f'<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n{head(cur)}\n</head>\n<body>\n{inner}</body>\n</html>\n'
