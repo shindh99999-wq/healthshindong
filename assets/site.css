@@ -351,3 +351,42 @@ h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 .price td:nth-child(2) { font-family: var(--display); font-weight: 400; font-size: 22px; }
 .price td:nth-child(3) { color: var(--muted); }
 .price-note { margin-top: 16px; color: var(--muted); font-size: 14.5px; }
+
+/* ---------- 5주년 이벤트 (11/30까지) ---------- */
+.event { padding-block: 24px 8px; }
+.ev-card { display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 24px; background: #164E45; color: #fff; }
+@media (min-width: 900px) { .ev-card { grid-template-columns: 1fr 1.05fr; gap: 44px; align-items: start; } }
+.ev-badge { display: inline-block; margin: 0 0 14px; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 14px; font-weight: 700; }
+.ev-card h2 { color: #fff; font-size: clamp(28px, 4.6vw, 42px); }
+.ev-sub { margin-top: 10px; color: rgba(255,255,255,.82); font-size: 17px; }
+.ev-big { margin-top: 18px; font-family: var(--display); font-size: clamp(38px, 6.4vw, 58px); line-height: 1.1; }
+.ev-big em { font-style: normal; color: #F2B544; }
+.ev-meta { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.ev-meta > * { padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,.12); font-size: 15px; }
+.ev-meta b { background: #F2B544; color: #3A2700; }
+.ev-dday { font-family: var(--mono); font-weight: 600; }
+.ev-for { margin-top: 18px; color: rgba(255,255,255,.88); font-size: 15.5px; }
+.ev-actions { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+.ev-btn { min-height: 54px; padding: 10px 24px; line-height: 1.35; text-align: center; font-size: 16.5px; background: #F2B544; color: #3A2700; }
+.ev-actions .btn-line { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.4); min-height: 54px; }
+.ev-table { background: var(--surface); color: var(--ink); border-radius: 18px; padding: clamp(16px, 2.6vw, 26px); min-width: 0; }
+.ev-price { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.ev-price caption { text-align: left; font-weight: 700; font-size: 15px; color: var(--pine); padding-bottom: 10px; }
+.ev-price th, .ev-price td { padding: 11px 6px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; }
+.ev-price th:first-child { text-align: left; }
+.ev-price thead th { font-size: 13px; font-weight: 500; color: var(--muted); border-bottom: 2px solid var(--ink); }
+.ev-price tbody th { font-weight: 700; }
+.ev-was { color: var(--muted); font-size: 15px; }
+.ev-now { font-family: var(--display); font-size: 21px; color: var(--pine); }
+.ev-off { font-size: 14px; font-weight: 700; color: #B4471B; }
+.ev-notes { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; line-height: 1.65; display: grid; gap: 4px; }
+@media (max-width: 480px) {
+  .ev-price th, .ev-price td { padding: 10px 4px; }
+  .ev-now { font-size: 19px; }
+  .ev-btn, .ev-actions .btn-line { width: 100%; }
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ev-off { color: #F59E6B; } }
+:root[data-theme="dark"] .ev-off { color: #F59E6B; }
+.ev-strip { display: block; padding: 10px 20px; text-align: center; background: #164E45; color: #fff; text-decoration: none; font-size: 14.5px; line-height: 1.5; }
+.ev-strip b { color: #F2B544; margin-right: 6px; }
+.ev-strip:hover { text-decoration: underline; }

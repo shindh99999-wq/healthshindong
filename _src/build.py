@@ -8,6 +8,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE))
 from topics import TOPICS  # 허리재활·무릎재활 페이지 내용
+from event import event_section, event_strip, EVENT_CSS  # 11월 5주년 이벤트 (11/30까지)
 ONE = (HERE / "onepage.html").read_text(encoding="utf-8")
 MODE = sys.argv[1] if len(sys.argv) > 1 else "site"
 SITE = HERE.parent  # 저장소 루트 (_src 의 상위 폴더)
@@ -41,7 +42,7 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
-ASSET_V = "20261002a"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
+ASSET_V = "20261026a"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
@@ -335,7 +336,7 @@ def body(cur):
         hero = hero.replace("<span>재활PT 트레이너 · 동훈쌤</span>", "<span>대표 · 재활PT 트레이너</span>")
         hero = hero.replace(f'href="{href(cur, "consult")}" data-track="lead_intent" data-location="hero">상담 문의하기',
                             f'href="{BOOK}" target="_blank" rel="noopener" data-track="lead" data-method="naver_booking" data-location="hero">네이버로 예약하기')
-        return f'''{hero}
+        return f'''{event_section(BOOK)}{hero}
 
   <section class="block">
     <div class="wrap">
@@ -544,7 +545,7 @@ h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 def head(cur, prev_main=False):
     key, path, file, label, title, desc = P[cur]
     if MODE == "preview":
-        css = f"<style>\n{CSS}{EXTRA_CSS}</style>"
+        css = f"<style>\n{CSS}{EXTRA_CSS}{EVENT_CSS}</style>"
         meta = f"<title>{'동훈쌤 홈페이지' if cur == 'home' else title}</title>\n{FONTS}\n{css}"
         return meta
     url = abs_url(cur)
@@ -579,7 +580,8 @@ def render(cur):
     main = body(cur).replace('src="images/shin-donghun-donghunssam.webp"', f'src="{img}"')
     script = (f"<script>\n{JS}</script>" if MODE == "preview"
               else f'<script src="{"" if cur == "home" else "../"}assets/site.js?v={ASSET_V}" defer></script>')
-    inner = f"{hdr}\n\n<main>\n{main}\n</main>\n\n{footer(cur)}\n\n{script}\n"
+    strip = "" if cur == "home" else event_strip(href(cur, "home"))
+    inner = f"{hdr}\n{strip}\n<main>\n{main}\n</main>\n\n{footer(cur)}\n\n{script}\n"
     if MODE == "preview" and cur == "home":
         return head(cur) + "\n" + inner
     return f'<!doctype html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n{head(cur)}\n</head>\n<body>\n{inner}</body>\n</html>\n'
@@ -591,7 +593,7 @@ def main():
         shutil.copy(SITE / "images/shin-donghun-donghunssam.webp", OUT / "images/shin-donghun-donghunssam.webp")
     else:
         (OUT / "assets").mkdir(exist_ok=True)
-        (OUT / "assets/site.css").write_text(CSS + EXTRA_CSS, encoding="utf-8")
+        (OUT / "assets/site.css").write_text(CSS + EXTRA_CSS + EVENT_CSS, encoding="utf-8")
         (OUT / "assets/site.js").write_text(JS, encoding="utf-8")
     if MODE == "site":
         # 없는 주소로 들어왔을 때 보여줄 404 페이지 (검색엔진에는 색인하지 않음)
