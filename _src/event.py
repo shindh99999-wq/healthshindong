@@ -21,7 +21,7 @@ EVENT_HIDE = (
 )
 
 
-def event_section(book):
+def event_section(book, img_prefix=""):
     if not EVENT_ON:
         return ""
     rows = "\n".join(
@@ -39,9 +39,12 @@ def event_section(book):
           <p class="ev-big">최대 <em>{EVENT_MAX_OFF}만 원</em> 할인</p>
           <p class="ev-meta"><b>11월 30일까지</b><span>선착순 20명 한정</span><span class="ev-dday" id="evDday" hidden></span></p>
           <p class="ev-for"><b>허리 · 무릎 · 어깨 · 관절 통증 · 수술 후 재활 · 다이어트</b><br>내 몸 상태에 맞춘 1:1 평가 기반 재활 트레이닝</p>
-          <div class="ev-actions">
+          <div class="ev-book">
+            <div class="ev-actions">
             <a class="btn btn-cta ev-btn" href="{book}" target="_blank" rel="noopener" data-track="lead" data-method="naver_booking" data-location="event">무료 근신경 기능평가·상담 예약하기</a>
             <a class="btn btn-line" href="tel:050714710290" data-track="lead" data-method="phone" data-location="event">전화 0507-1471-0290</a>
+            </div>
+            <a class="ev-qr" href="{book}" target="_blank" rel="noopener" data-track="lead" data-method="naver_booking" data-location="event_qr"><img src="{img_prefix}images/event-naver-qr.svg" width="112" height="112" alt="네이버 상담 예약 QR 코드"><span>휴대폰으로 찍으면<br>네이버 상담 바로가기</span></a>
           </div>
         </div>
         <div class="ev-table">
@@ -56,7 +59,7 @@ def event_section(book):
             <li>신동훈 대표가 직접 진행하는 1:1 개인 수업 기준입니다.</li>
             <li>11월 30일까지 선착순 20명에게 적용되며, 20명이 차면 일찍 마감될 수 있어요.</li>
             <li>첫 방문은 무료 근신경 기능평가와 상담으로 진행합니다.</li>
-            <li>부산교대역(1호선) 4번 출구에서 걸어서 5분 이내 · 연제구 명륜로 2번길 7, 삼익퓨처타워상가 306호 (베스킨라빈스·센텀스타마트 건물)</li>
+            <li>부산교대역(1호선) 4번 출구에서 걸어서 5분 이내 · 연제구 거제동 명륜로 2번길 7, 삼익퓨처타워상가 306호 (베스킨라빈스·센텀스타마트 건물) · 문의 0507-1471-0290</li>
           </ul>
         </div>
       </div>
@@ -95,6 +98,11 @@ EVENT_CSS = """
 .ev-actions { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
 .ev-btn { min-height: 54px; padding: 10px 24px; line-height: 1.35; text-align: center; font-size: 16.5px; background: #F2B544; color: #3A2700; }
 .ev-actions .btn-line { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.4); min-height: 54px; }
+.ev-book { margin-top: 22px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; }
+.ev-book .ev-actions { margin-top: 0; }
+.ev-qr { display: none; align-items: center; gap: 12px; text-decoration: none; color: #fff; font-size: 14px; line-height: 1.5; }
+.ev-qr img { width: 112px; height: 112px; border-radius: 10px; border: 4px solid #03C75A; background: #fff; }
+@media (min-width: 900px) { .ev-qr { display: flex; } }
 .ev-table { background: var(--surface); color: var(--ink); border-radius: 18px; padding: clamp(16px, 2.6vw, 26px); min-width: 0; }
 .ev-price { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .ev-price caption { text-align: left; font-weight: 700; font-size: 15px; color: var(--pine); padding-bottom: 10px; }
