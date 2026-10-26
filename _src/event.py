@@ -85,14 +85,14 @@ EVENT_CSS = """
 /* ---------- 5주년 이벤트 (11/30까지) — 포스터 색: 파랑 #0B5CB8, 주황 #E8501A ---------- */
 .event { padding-block: 24px 8px; scroll-margin-top: 70px; }
 .ev-card { position: relative; overflow: hidden; display: grid; gap: 28px; padding: clamp(22px, 4vw, 44px); border-radius: 24px; background: linear-gradient(140deg, #0B5CB8 0%, #0A4A96 100%); color: #fff; box-shadow: 0 18px 40px -18px rgba(11,92,184,.55); }
-.ev-card::after { content: "5"; position: absolute; right: -18px; top: -60px; font-family: var(--display); font-size: 300px; line-height: 1; color: rgba(255,255,255,.06); pointer-events: none; }
+.ev-card::after { content: "5"; position: absolute; right: -18px; top: -60px; font-family: var(--display); font-weight: 800; font-size: 300px; line-height: 1; color: rgba(255,255,255,.06); pointer-events: none; }
 .ev-card > * { position: relative; z-index: 1; }
 @media (min-width: 900px) { .ev-card { grid-template-columns: 1fr 1.05fr; gap: 44px; align-items: start; } }
 .ev-badge { display: inline-block; margin: 0 0 14px; padding: 7px 14px; border-radius: 999px; background: #fff; color: #0B5CB8; font-size: 14.5px; font-weight: 700; }
 .ev-card h2 { color: #fff; font-size: clamp(30px, 4.8vw, 44px); }
 .ev-sub { margin-top: 10px; color: rgba(255,255,255,.88); font-size: 17px; }
 .ev-big { margin-top: 20px; }
-.ev-big span { display: inline-block; padding: 10px 18px 8px; border-radius: 14px; background: #fff; color: #E8501A; font-family: var(--display); font-size: clamp(36px, 6.4vw, 58px); line-height: 1.1; transform: rotate(-1.5deg); box-shadow: 6px 6px 0 rgba(0,0,0,.18); }
+.ev-big span { display: inline-block; padding: 10px 18px 8px; border-radius: 14px; background: #fff; color: #E8501A; font-family: var(--display); font-weight: 800; font-size: clamp(36px, 6.4vw, 58px); line-height: 1.1; transform: rotate(-1.5deg); box-shadow: 6px 6px 0 rgba(0,0,0,.18); }
 .ev-big em { font-style: normal; }
 .ev-meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
 .ev-meta > * { padding: 6px 12px; border-radius: 8px; background: rgba(255,255,255,.16); font-size: 15px; font-weight: 600; }
@@ -118,7 +118,7 @@ EVENT_CSS = """
 .ev-price thead th { font-size: 13px; font-weight: 500; color: var(--muted); border-bottom: 2px solid var(--ink); }
 .ev-price tbody th { font-weight: 700; }
 .ev-was { color: var(--muted); font-size: 15px; }
-.ev-now { font-family: var(--display); font-size: 22px; color: #0B5CB8; }
+.ev-now { font-family: var(--display); font-weight: 800; font-size: 22px; color: #0B5CB8; }
 .ev-off { font-size: 14px; font-weight: 700; color: #C8410F; }
 .ev-notes { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; line-height: 1.65; display: grid; gap: 4px; }
 @media (max-width: 480px) {

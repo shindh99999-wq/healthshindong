@@ -42,7 +42,7 @@ CONSULT = section("consult")
 YT = "https://www.youtube.com/@%EA%B1%B4%EA%B0%95%EC%8B%A0%EB%8F%99%EB%8F%99%ED%9B%88%EC%8C%A4"
 BOOK = "https://naver.me/Gq8oYAK2"
 CUR = ' aria-current="page"'
-ASSET_V = "20261026b"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
+ASSET_V = "20261026c"  # 디자인(css/js)을 바꾸면 이 값을 바꿔야 방문자 브라우저가 새로 받아감
 
 PAGES = [
     # key, path(site), file(preview), nav label, title, description, eyebrow
@@ -472,10 +472,10 @@ EXTRA_CSS = """
 .navrow a[aria-current="page"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
 @media (min-width: 860px) { .navrow { display: none; } }
 .page-head { padding-block: 56px 8px; }
-.page-head h1 { font-family: var(--display); font-weight: 400; font-size: clamp(32px, 5.4vw, 52px); line-height: 1.2; letter-spacing: -.01em; max-width: 22ch; }
+.page-head h1 { font-family: var(--display); font-weight: 800; font-size: clamp(32px, 5.4vw, 52px); line-height: 1.2; letter-spacing: -.01em; max-width: 22ch; }
 .page-head .lead { margin-top: 14px; font-size: 17px; }
 section.block.first { border-top: 0; padding-top: 40px; }
-.consult .ch1 { font-family: var(--display); font-weight: 400; font-size: clamp(28px, 4.2vw, 40px); line-height: 1.25; color: var(--bg); }
+.consult .ch1 { font-family: var(--display); font-weight: 800; font-size: clamp(28px, 4.2vw, 40px); line-height: 1.25; color: var(--bg); }
 .fgrid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
 @media (min-width: 1000px) { .fgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .fcard { display: grid; gap: 6px; align-content: start; padding: 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); text-decoration: none; transition: border-color .15s ease; }
@@ -517,7 +517,7 @@ section.block.first { border-top: 0; padding-top: 40px; }
 .who-list dd { margin: 0; color: var(--muted); font-size: 15px; }
 .focus .more { font-size: 14.5px; }
 .hero .hero-kicker { font-family: var(--body); font-weight: 700; font-size: clamp(16px, 2vw, 19px); line-height: 1.5; letter-spacing: 0; color: var(--pine); margin: 0 0 14px; }
-.hero .hero-title { font-family: var(--display); font-weight: 400; font-size: clamp(38px, 7vw, 66px); line-height: 1.12; letter-spacing: -.015em; text-wrap: balance; margin: 0; }
+.hero .hero-title { font-family: var(--display); font-weight: 800; font-size: clamp(38px, 7vw, 66px); line-height: 1.12; letter-spacing: -.015em; text-wrap: balance; margin: 0; }
 .hero .hero-title em { font-style: normal; color: var(--pine); }
 .map-embed { margin-top: 20px; aspect-ratio: 16 / 9; max-width: 100%; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); background: var(--pine-soft); }
 .map-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
@@ -537,7 +537,7 @@ h2.sub { font-size: clamp(24px, 3.4vw, 30px); }
 .price th, .price td { text-align: left; padding: 14px 8px; border-bottom: 1px solid var(--line); }
 .price thead th { font-family: var(--mono); font-size: 12.5px; font-weight: 500; color: var(--muted); border-bottom: 2px solid var(--ink); }
 .price tbody th { font-weight: 700; }
-.price td:nth-child(2) { font-family: var(--display); font-weight: 400; font-size: 22px; }
+.price td:nth-child(2) { font-family: var(--display); font-weight: 800; font-size: 22px; }
 .price td:nth-child(3) { color: var(--muted); }
 .price-note { margin-top: 16px; color: var(--muted); font-size: 14.5px; }
 """
